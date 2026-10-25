@@ -1,0 +1,3 @@
+[submodule "vendor/Filee"]
+	path = vendor/Filee
+	url = https://github.com/KnifeLemon/Filee.git
