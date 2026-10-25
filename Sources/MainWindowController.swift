@@ -861,7 +861,11 @@ final class MainWindowController: NSWindowController, NSWindowDelegate, NSTableV
         }
     }
 
+    private static let preferredTargets = [FileeEngine.folderId, "pdf", "jpg", "png", "mp4", "mp3", "docx",
+                                           "xlsx", "epub", "txt", "m4a", "webp", "zip"]
+
     private func defaultTarget(in set: Set<String>) -> String? {
+        if let preferred = Self.preferredTargets.first(where: set.contains) { return preferred }
         let infos = set.compactMap { FileeEngine.shared.info($0) }
         for category in FormatPickerController.categoryOrder {
             let match = infos.filter { $0.category == category }

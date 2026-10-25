@@ -20,7 +20,7 @@ final class FormatPickerController: NSViewController, NSSearchFieldDelegate {
 
     private let maxRowsPerColumn = 10
     private let maxColumnsPerRow = 7
-    private let columnWidth: CGFloat = 104
+    private let columnWidth: CGFloat = 118
 
     init(ready: Set<String>, needsEngine: Set<String>, selected: String?) {
         self.ready = ready

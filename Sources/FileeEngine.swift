@@ -86,6 +86,8 @@ final class FileeEngine {
 
     static func cliURL(fromUserChoice url: URL) -> URL {
         if url.pathExtension.lowercased() == "app" {
+            let embedded = url.appendingPathComponent("Contents/MacOS/engine/filee-cli")
+            if FileManager.default.isExecutableFile(atPath: embedded.path) { return embedded }
             return url.appendingPathComponent("Contents/MacOS/filee-cli")
         }
         return url

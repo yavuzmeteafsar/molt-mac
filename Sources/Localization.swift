@@ -109,7 +109,7 @@ enum L10n {
         "missing.download": "Filee'yi İndir",
         "missing.locate": "Konum Seç…",
         "missing.invalid": "Seçilen öğe Filee komut satırı aracı değil.",
-        "missing.panelMessage": "Filee.app'i ya da filee-cli dosyasını seçin",
+        "missing.panelMessage": "Filee.app'i, motorlu bir Molt.app'i ya da filee-cli dosyasını seçin",
 
         "error.notFound": "Filee komut satırı aracı bulunamadı.",
         "error.noFormats": "Filee format listesi okunamadı.",
@@ -244,7 +244,7 @@ enum L10n {
         "missing.download": "Download Filee",
         "missing.locate": "Locate…",
         "missing.invalid": "The selected item isn't the Filee command-line tool.",
-        "missing.panelMessage": "Choose Filee.app or the filee-cli file",
+        "missing.panelMessage": "Choose Filee.app, a Molt.app with the engine, or the filee-cli file",
 
         "error.notFound": "The Filee command-line tool wasn't found.",
         "error.noFormats": "Couldn't read Filee's format list.",
