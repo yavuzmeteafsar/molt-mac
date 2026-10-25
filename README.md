@@ -1,13 +1,33 @@
-# Molt for Mac
+<p align="center">
+  <img src="Assets/AppIcon.png" width="128" alt="Molt icon">
+</p>
 
-Native macOS file converter, powered by [Filee](https://github.com/KnifeLemon/Filee).
+<h1 align="center">Molt for Mac</h1>
 
-A snake molts and stays the same snake; a file changes its format and keeps its content.
+<p align="center">
+  Native macOS file converter, powered by <a href="https://github.com/KnifeLemon/Filee">Filee</a>.<br>
+  <em>A snake molts and stays the same snake; a file changes its format and keeps its content.</em>
+</p>
+
+<p align="center">
+  <a href="https://github.com/yavuzmeteafsar/molt-mac/releases/latest"><img src="https://img.shields.io/github/v/release/yavuzmeteafsar/molt-mac?color=F06EAA" alt="Release"></a>
+  <img src="https://img.shields.io/badge/macOS-13%2B-555" alt="macOS 13+">
+  <img src="https://img.shields.io/badge/Apple%20Silicon%20%7C%20Intel-555" alt="Apple Silicon | Intel">
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/yavuzmeteafsar/molt-mac?color=555" alt="MIT license"></a>
+</p>
+
+<p align="center">
+  <img src="docs/main-window.png" width="720" alt="Molt's main window with converted files">
+</p>
 
 Drop files into a window, pick a target format, press **Convert**. Images, PDF, Word, Excel, PowerPoint, e-books,
 fonts, CAD, 3D models and more, all offline.
 
 [🇹🇷 Türkçe](README.tr.md)
+
+<p align="center">
+  <img src="docs/format-picker.png" width="720" alt="The format picker, grouped by category with search">
+</p>
 
 ## Built on Filee
 

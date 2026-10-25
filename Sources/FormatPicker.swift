@@ -101,7 +101,7 @@ final class FormatPickerController: NSViewController, NSSearchFieldDelegate {
         }
 
         let order = Self.categoryOrder + groups.keys.filter { !Self.categoryOrder.contains($0) }.sorted()
-        var columns: [NSView] = []
+        var groupsOfColumns: [[NSView]] = []
         firstMatch = nil
         for category in order {
             guard let entries = groups[category], !entries.isEmpty else { continue }
@@ -110,30 +110,39 @@ final class FormatPickerController: NSViewController, NSSearchFieldDelegate {
                 return a.0.displayName.localizedStandardCompare(b.0.displayName) == .orderedAscending
             }
             if firstMatch == nil, let first = sorted.first(where: { $0.1 }) { firstMatch = first.0.id }
+            var categoryColumns: [NSView] = []
             var start = 0
             while start < sorted.count {
                 let chunk = Array(sorted[start..<min(start + maxRowsPerColumn, sorted.count)])
-                columns.append(column(title: start == 0 ? categoryName(category) : nil, entries: chunk))
+                categoryColumns.append(column(title: start == 0 ? categoryName(category) : nil, entries: chunk))
                 start += maxRowsPerColumn
             }
+            groupsOfColumns.append(categoryColumns)
         }
 
         for view in grid.arrangedSubviews {
             grid.removeArrangedSubview(view)
             view.removeFromSuperview()
         }
-        var index = 0
-        while index < columns.count {
-            let slice = Array(columns[index..<min(index + maxColumnsPerRow, columns.count)])
-            let row = NSStackView(views: slice)
+        var rows: [[NSView]] = []
+        var current: [NSView] = []
+        for group in groupsOfColumns {
+            if !current.isEmpty && current.count + group.count > maxColumnsPerRow {
+                rows.append(current)
+                current = []
+            }
+            current += group
+        }
+        if !current.isEmpty { rows.append(current) }
+        for views in rows {
+            let row = NSStackView(views: views)
             row.orientation = .horizontal
             row.alignment = .top
             row.spacing = 10
             grid.addArrangedSubview(row)
-            index += maxColumnsPerRow
         }
-        grid.isHidden = columns.isEmpty
-        emptyLabel.isHidden = !columns.isEmpty
+        grid.isHidden = rows.isEmpty
+        emptyLabel.isHidden = !rows.isEmpty
 
         view.layoutSubtreeIfNeeded()
         preferredContentSize = view.fittingSize

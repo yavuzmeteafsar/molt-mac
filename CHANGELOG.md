@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Format picker: a category's columns always stay on the same row, so no format ends up under the wrong heading
+
 ## 1.0.0
 
 First release.

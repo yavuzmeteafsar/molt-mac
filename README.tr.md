@@ -1,13 +1,33 @@
-# Molt for Mac
+<p align="center">
+  <img src="Assets/AppIcon.png" width="128" alt="Molt simgesi">
+</p>
 
-macOS için native bir dosya dönüştürücü, [Filee](https://github.com/KnifeLemon/Filee) motoruyla.
+<h1 align="center">Molt for Mac</h1>
 
-Yılan deri değiştirir ama aynı yılandır; dosya da format değiştirir ama içeriği aynı kalır.
+<p align="center">
+  macOS için native bir dosya dönüştürücü, <a href="https://github.com/KnifeLemon/Filee">Filee</a> motoruyla.<br>
+  <em>Yılan deri değiştirir ama aynı yılandır; dosya da format değiştirir ama içeriği aynı kalır.</em>
+</p>
+
+<p align="center">
+  <a href="https://github.com/yavuzmeteafsar/molt-mac/releases/latest"><img src="https://img.shields.io/github/v/release/yavuzmeteafsar/molt-mac?color=F06EAA" alt="Release"></a>
+  <img src="https://img.shields.io/badge/macOS-13%2B-555" alt="macOS 13+">
+  <img src="https://img.shields.io/badge/Apple%20Silicon%20%7C%20Intel-555" alt="Apple Silicon | Intel">
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/yavuzmeteafsar/molt-mac?color=555" alt="MIT license"></a>
+</p>
+
+<p align="center">
+  <img src="docs/main-window.png" width="720" alt="Dönüştürülmüş dosyalarla Molt ana penceresi">
+</p>
 
 Dosyaları pencereye bırak, hedef formatı seç, **Dönüştür**'e bas. Görsel, PDF, Word, Excel, PowerPoint, e-kitap,
 yazı tipi, CAD, 3D model ve daha fazlası, tamamen çevrimdışı.
 
 [🇬🇧 English](README.md)
+
+<p align="center">
+  <img src="docs/format-picker.png" width="720" alt="Kategorilere ayrılmış, aranabilir format seçici">
+</p>
 
 ## Filee üzerine kurulu
 
