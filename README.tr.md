@@ -66,18 +66,22 @@ Dosyalar ve Klasörler** altından aç.
 
 ## İsteğe bağlı motorlar
 
-Çoğu dönüşüm kurulumsuz çalışır. Bazıları, Filee'nin Mac'te aradığı daha büyük bir program gerektirir:
+Çoğu dönüşüm kurulumsuz çalışır. Bazıları daha büyük bir program gerektirir. **Molt → Motorlar…** (⌘,) penceresi
+hangilerinin kurulu olduğunu gösterir ve eksikleri kurar. Molt bunun için Filee'nin kendi kurucusunu (`filee engines`)
+kullanır: indirme, sağlama toplamı ve klasör Filee uygulamasındakiyle aynıdır, iki uygulama aynı kopyayı paylaşır.
 
 | Motor | Açtığı formatlar | Kurulum |
 | --- | --- | --- |
-| LibreOffice | DOC, RTF, ODT, PPT ve diğer eski ofis formatları; Türkçe, Arapça gibi Latin-1 dışı metinlerde düzgün PDF | `brew install --cask libreoffice` |
+| LibreOffice | DOC, RTF, ODT, PPT ve diğer eski ofis formatları; Türkçe, Arapça gibi Latin-1 dışı metinlerde düzgün PDF | Molt içinden |
+| Pandoc | Markdown, LaTeX ve diğer işaretleme dilleri ↔ DOCX/ODT, DOCX → PPTX slayt | Molt içinden |
+| calibre | MOBI, AZW3 ve nadir e-kitap formatları | Molt içinden (macOS 14+) |
 | FFmpeg | Bütün video ve ses | `brew install ffmpeg` |
-| Pandoc | Markdown, LaTeX ve diğer işaretleme dilleri ↔ DOCX/ODT, DOCX → PPTX slayt | `brew install pandoc` |
 | Ghostscript | EPS / PS | `brew install ghostscript` |
-| calibre | MOBI, AZW3 ve nadir e-kitap formatları | `brew install --cask calibre` |
+| Tesseract | Taranmış belgelerde metin tanıma (OCR) | `brew install tesseract` |
 
-Kurduktan sonra Molt'u yeniden başlat. Eksik motor gerektiren formatlar seçicide gizlidir; **Ek motor gerektirenleri
-de göster** ile gri hâlde görülebilir.
+Filee'nin FFmpeg, Ghostscript ve Tesseract için Mac indirmesi yok; bunlarda Motorlar penceresi Homebrew komutunu
+kopyalar, kurduktan sonra **Yeniden Tara** yeterli. Eksik motor gerektiren formatlar seçicide gizlidir; **Ek motor
+gerektirenleri de göster** ile gri hâlde görülür, yanındaki **Motorları Kur…** pencereyi açar.
 
 ## Nasıl çalışıyor
 
@@ -90,8 +94,10 @@ sarmalaması gibi:
 | Dosya eklenince | `filee formats <id>` | Her formatın hedeflerini alıp seçili dosyaların ortak hedeflerini bulur |
 | Dönüştür | `filee convert <dosyalar> --to <id> [-o klasör] [--quality n] [--overwrite] [--keep-dates]` | Filee'nin dosya başına yazdığı `ok` / `fail` / `skip` satırlarını yazıldıkları anda okuyup tabloyu ve ilerleme penceresini canlı günceller |
 | Durdur | `SIGINT` | Terminaldeki Ctrl+C ile aynı; Filee işi temiz şekilde iptal eder |
+| Motorlar penceresi | `filee engines --json` | Ek motorları durum, sürüm ve boyutlarıyla listeler |
+| Kur / kaldır | `filee engines install <id> --json`, `filee engines remove <id> --json` | Filee'nin stderr'e yazdığı ilerlemeyi (satır başına bir JSON nesnesi) ilerleme çubuğuna, sonucu stdout'tan okur |
 
-Filee'nin `--json` çıktısı bilerek kullanılmadı: o çıktı bütün iş bittikten sonra tek seferde gelir, satır çıktısı
+`convert` için Filee'nin `--json` çıktısı bilerek kullanılmadı: o çıktı bütün iş bittikten sonra tek seferde gelir, satır çıktısı
 ise uzun bir toplu işte dosya bazında ilerleme verir.
 
 ## Kaynaktan derleme

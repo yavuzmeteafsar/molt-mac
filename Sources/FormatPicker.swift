@@ -7,6 +7,7 @@ final class FormatPickerController: NSViewController, NSSearchFieldDelegate {
                                 "Data", "Model3D", "Geo"]
 
     var onPick: ((String) -> Void)?
+    var onEngines: (() -> Void)?
 
     private let ready: Set<String>
     private let needsEngine: Set<String>
@@ -15,6 +16,7 @@ final class FormatPickerController: NSViewController, NSSearchFieldDelegate {
     private let grid = NSStackView()
     private let emptyLabel = NSTextField(labelWithString: L("picker.noMatch"))
     private let engineToggle = NSButton(checkboxWithTitle: "", target: nil, action: nil)
+    private let enginesButton = NSButton(title: L("picker.installEngines"), target: nil, action: nil)
     private var showEngine = UserDefaults.standard.bool(forKey: FormatPickerController.showEngineKey)
     private var firstMatch: String?
 
@@ -56,7 +58,19 @@ final class FormatPickerController: NSViewController, NSSearchFieldDelegate {
         engineToggle.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
         engineToggle.isHidden = needsEngine.isEmpty
 
-        let stack = NSStackView(views: [searchField, grid, emptyLabel, engineToggle])
+        enginesButton.target = self
+        enginesButton.action = #selector(openEngines(_:))
+        enginesButton.bezelStyle = .inline
+        enginesButton.controlSize = .small
+        enginesButton.font = .systemFont(ofSize: NSFont.smallSystemFontSize)
+        enginesButton.isHidden = needsEngine.isEmpty || !FileeEngine.shared.supportsEngines
+
+        let footer = NSStackView(views: [engineToggle, enginesButton])
+        footer.orientation = .horizontal
+        footer.alignment = .centerY
+        footer.spacing = 12
+
+        let stack = NSStackView(views: [searchField, grid, emptyLabel, footer])
         stack.orientation = .vertical
         stack.alignment = .leading
         stack.spacing = 14
@@ -191,6 +205,10 @@ final class FormatPickerController: NSViewController, NSSearchFieldDelegate {
             return
         }
         onPick?(id)
+    }
+
+    @objc private func openEngines(_ sender: Any?) {
+        onEngines?()
     }
 
     @objc private func toggleEngine(_ sender: Any?) {

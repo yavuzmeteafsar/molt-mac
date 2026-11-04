@@ -441,6 +441,15 @@ final class MainWindowController: NSWindowController, NSWindowDelegate, NSTableV
         return result
     }
 
+    func enginesChanged() {
+        guard engineReady else { return }
+        FileeEngine.shared.forgetTargets()
+        targets.removeAll()
+        loadingFormats.removeAll()
+        loadTargets(Set(items.map(\.formatId)))
+        refreshAll()
+    }
+
     private func loadTargets(_ ids: Set<String>) {
         let needed = ids.subtracting(targets.keys).subtracting(loadingFormats)
         guard !needed.isEmpty else { return }
@@ -553,6 +562,10 @@ final class MainWindowController: NSWindowController, NSWindowDelegate, NSTableV
         picker.onPick = { [weak self, weak popover] id in
             popover?.performClose(nil)
             self?.choose(id)
+        }
+        picker.onEngines = { [weak popover] in
+            popover?.performClose(nil)
+            NSApp.sendAction(#selector(AppDelegate.showEngines(_:)), to: nil, from: nil)
         }
         pickerPopover = popover
         popover.show(relativeTo: targetButton.bounds, of: targetButton, preferredEdge: .maxY)

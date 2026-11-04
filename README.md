@@ -66,18 +66,22 @@ Keyboard Shortcuts → Services → Files and Folders**.
 
 ## Optional engines
 
-Most conversions work out of the box. A few need a larger program that Filee looks for on your Mac:
+Most conversions work out of the box. A few need a larger program. Open **Molt → Engines…** (⌘,) to see which ones
+are installed and install the rest; Molt uses Filee's own installer (`filee engines`), so the download, the checksum
+and the folder are the same as in the Filee app, and both apps share the copy.
 
 | Engine | Unlocks | Install |
 | --- | --- | --- |
-| LibreOffice | DOC, RTF, ODT, PPT and other older office formats; correct PDF output for Turkish, Arabic and other non-Latin-1 text | `brew install --cask libreoffice` |
+| LibreOffice | DOC, RTF, ODT, PPT and other older office formats; correct PDF output for Turkish, Arabic and other non-Latin-1 text | In Molt |
+| Pandoc | Markdown, LaTeX and other markup ↔ DOCX/ODT, DOCX → PPTX slides | In Molt |
+| calibre | MOBI, AZW3 and rarer e-book formats | In Molt (macOS 14+) |
 | FFmpeg | All video and audio | `brew install ffmpeg` |
-| Pandoc | Markdown, LaTeX and other markup ↔ DOCX/ODT, DOCX → PPTX slides | `brew install pandoc` |
 | Ghostscript | EPS / PS | `brew install ghostscript` |
-| calibre | MOBI, AZW3 and rarer e-book formats | `brew install --cask calibre` |
+| Tesseract | Text recognition (OCR) in scans | `brew install tesseract` |
 
-Restart Molt after installing one. Formats that need a missing engine are hidden in the picker, or shown greyed out
-with **Also show formats that need an optional engine**.
+Filee has no Mac download of FFmpeg, Ghostscript or Tesseract; for those the Engines window copies the Homebrew
+command, and **Check Again** picks them up. Formats that need a missing engine are hidden in the picker, or shown
+greyed out with **Also show formats that need an optional engine**, next to **Install Engines…**.
 
 ## How it works
 
@@ -89,9 +93,11 @@ Molt runs Filee's command-line tool as a child process, the way archive front en
 | Files added | `filee formats <id>` | Lists each format's targets and intersects them for the selection |
 | Convert | `filee convert <files> --to <id> [-o dir] [--quality n] [--overwrite] [--keep-dates]` | Reads Filee's per-file `ok` / `fail` / `skip` lines as they are printed and updates the table and the progress sheet live |
 | Stop | `SIGINT` | The same as Ctrl+C in a terminal; Filee cancels cleanly |
+| Engines window | `filee engines --json` | Lists the optional engines with their status, version and size |
+| Install / remove | `filee engines install <id> --json`, `filee engines remove <id> --json` | Reads the progress Filee writes to stderr (one JSON object per line) into a progress bar, then the result from stdout |
 
-Filee's `--json` output was not used on purpose: it arrives once, after the whole batch, while the line output gives
-per-file progress during a long batch.
+For `convert`, Filee's `--json` output was not used on purpose: it arrives once, after the whole batch, while the
+line output gives per-file progress during a long batch.
 
 ## Build from source
 
@@ -121,6 +127,7 @@ Releases are built by [GitHub Actions](.github/workflows/release.yml) on every `
 Sources/FileeEngine.swift          locating Filee, parsing its format lists, running conversions
 Sources/MainWindowController.swift main window: toolbar, file table, output options
 Sources/FormatPicker.swift         the column-based format picker
+Sources/EnginesWindow.swift        the Engines window: lists, installs and removes optional engines
 Sources/Views.swift                drop zone and progress sheet
 Sources/AppDelegate.swift          menus, About panel, app lifecycle
 Sources/Localization.swift         English and Turkish strings (MOLT_LANG=tr|en overrides the system language)
