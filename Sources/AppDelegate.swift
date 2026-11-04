@@ -14,6 +14,7 @@ enum AppInfo {
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var controller: MainWindowController?
+    private var enginesController: EnginesWindowController?
     private var openedBeforeLaunch: [URL] = []
 
     private let serviceProvider = ServiceProvider()
@@ -54,6 +55,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        if let enginesController, enginesController.isBusy {
+            let alert = NSAlert()
+            alert.messageText = L("engines.quitTitle")
+            alert.informativeText = L("engines.quitBody")
+            alert.addButton(withTitle: L("button.quit"))
+            alert.addButton(withTitle: L("button.cancel"))
+            guard alert.runModal() == .alertFirstButtonReturn else { return .terminateCancel }
+            enginesController.cancelForQuit()
+        }
         guard let controller, controller.isConverting else { return .terminateNow }
         let alert = NSAlert()
         alert.messageText = L("quit.title")
@@ -92,6 +102,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
 
+    @objc func showEngines(_ sender: Any?) {
+        let engines: EnginesWindowController
+        if let existing = enginesController {
+            engines = existing
+        } else {
+            engines = EnginesWindowController()
+            engines.onChange = { [weak self] in self?.controller?.enginesChanged() }
+            engines.canRemove = { [weak self] in !(self?.controller?.isConverting ?? false) }
+            enginesController = engines
+        }
+        engines.showWindow(nil)
+        engines.window?.makeKeyAndOrderFront(nil)
+    }
+
     @objc private func openFileeRepo(_ sender: Any?) {
         NSWorkspace.shared.open(AppInfo.fileeRepo)
     }
@@ -108,6 +132,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let about = appMenu.addItem(withTitle: L("menu.about", name), action: #selector(showAbout(_:)), keyEquivalent: "")
         about.target = self
         appMenu.addItem(.separator())
+        let engines = appMenu.addItem(withTitle: L("menu.engines"), action: #selector(showEngines(_:)), keyEquivalent: ",")
+        engines.target = self
         appMenu.addItem(withTitle: L("menu.locateFilee"),
                         action: #selector(MainWindowController.locateFilee(_:)), keyEquivalent: "")
         appMenu.addItem(.separator())

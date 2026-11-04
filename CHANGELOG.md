@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0 (unreleased)
+
+- **Engines window** (Molt → Engines…, ⌘,): lists Filee's optional engines with status, version and size, and installs,
+  updates or removes them with Filee's own installer (`filee engines`), with a live progress bar and cancel
+- Engines Filee can't download on a Mac (FFmpeg, Ghostscript, Tesseract): the window copies the Homebrew command;
+  **Check Again** picks up the new copy
+- Format picker: **Install Engines…** next to the optional-engine toggle
+- Installing or removing an engine refreshes the targets of the files in the list right away; no restart needed
+- Filee updated to 2.3.0, the first release with `filee engines`
+
 ## 1.0.1
 
 - Format picker: a category's columns always stay on the same row, so no format ends up under the wrong heading

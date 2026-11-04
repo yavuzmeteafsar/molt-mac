@@ -39,7 +39,14 @@ final class FileeEngine {
     private(set) var formats: [String: FormatInfo] = [:]
     private var extensionMap: [String: String] = [:]
     private var targetCache: [String: TargetSet] = [:]
+    private var enginesCommand = false
     private let lock = NSLock()
+
+    var supportsEngines: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return enginesCommand
+    }
 
     static let scratchDirectory: URL = {
         let url = FileManager.default.temporaryDirectory
@@ -139,6 +146,8 @@ final class FileeEngine {
         }
         let parsed = Self.parseFormatList(result.stdout)
         guard !parsed.isEmpty else { throw FileeError.failed(L("error.noFormats")) }
+        let help = try? run(["help", "engines"])
+        let engines = help.map { $0.status == 0 && $0.stdout.hasPrefix("Usage: filee engines") } ?? false
         var map: [String: FormatInfo] = [Self.folderId: FormatInfo(id: Self.folderId, displayName: L("format.folder"),
                                                                    category: "Archive", extensions: [], writable: true)]
         var extensions: [String: String] = [:]
@@ -151,6 +160,14 @@ final class FileeEngine {
         lock.lock()
         formats = map
         extensionMap = extensions
+        targetCache.removeAll()
+        enginesCommand = engines
+        lock.unlock()
+    }
+
+    func forgetTargets() {
+        lock.lock()
+        targetCache.removeAll()
         lock.unlock()
     }
 
