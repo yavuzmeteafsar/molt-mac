@@ -364,6 +364,9 @@ final class EnginesWindowController: NSWindowController, NSWindowDelegate, NSTab
             return (L("engines.status.notInstalled"),
                     L("engines.detail.download", size(engine.downloadSize), size(engine.installedSize)))
         }
+        if let command = engine.brewCommand {
+            return (L("engines.status.notInstalled"), L("engines.detail.brew", command))
+        }
         return (L("engines.status.notInstalled"), engine.unavailableReason)
     }
 
