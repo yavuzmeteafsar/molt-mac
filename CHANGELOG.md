@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0 (unreleased)
+## 1.1.0
 
 - **Engines window** (Molt → Engines…, ⌘,): lists Filee's optional engines with status, version and size, and installs,
   updates or removes them with Filee's own installer (`filee engines`), with a live progress bar and cancel
